@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/ampatil/myapp-ansible.git'
+            }
+        }
+      stage('excecuteansible') {
+            steps {
+                ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'dev.inv', playbook: 'apache.yml', vaultTmpPath: ''
+            }
+        }    
+    }
+}
